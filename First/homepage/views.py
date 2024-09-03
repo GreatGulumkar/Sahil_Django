@@ -16,5 +16,5 @@ def displayname(request):
     name = request.GET["username"]
     print(name)
     # return render(request, "name.html", {"username": name})
-    # return HttpResponse(name)
+    return HttpResponse(name)
     # return JsonResponse({"username": name})

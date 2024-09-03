@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Book List</title>
+</head>
+
+<body>
+  <h1>Book List</h1>
+  <a href="{% url 'book_create' %}">Add New Book</a>
+  <table>
+    <thead>
+      <tr>
+        <th>Book ID</th>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Published Date</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for book in books %}
+      <tr>
+        <td>{{ book.book_id }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.author }}</td>
+        <td>{{ book.pub_data }}</td>
+        <td>
+          <a href="{% url 'book_update' book.book_id book.title%}">Edit</a>
+          <a href="{% url 'book_delete' book.book_id %}">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+
+</html>
