@@ -42,9 +42,42 @@ def read(request):
         return Response(serial, status=status.HTTP_200_OK)
 
 
+@api_view(["PUT"])
 def update(request):
-    pass
+    if request.method == "PUT":
+
+        try:
+            key = request.data["title"]
+
+            book = Books.objects.filter(title=key)
+
+            # if book.count() != 0:
+
+            #     print(book)
+
+            book.author = request.data["author"]
+            book.pub_date = request.data["pub_date"]
+            book.save()
+            # else:
+            #     return Response("Book not found", status=status.HTTP_404_NOT_FOUND)
+
+            return Response("Book updated successfully", status=status.HTTP_200_OK)
+
+        except Books.DoesNotExist:
+            return Response("Book not found", status=status.HTTP_404_NOT_FOUND)
+
+        except Exception as e:
+            print(type(e))
+            return Response(
+                "There was an error while updating the Book",
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
 
+@api_view(["DELETE"])
 def delete(request):
-    pass
+
+    if request.method == "DELETE":
+        key = request.data["title"]
+
+        Books.objects.filter(title=key).delete()
